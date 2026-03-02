@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 战略升级方案 - 2026 战略规划汇报</title>
+  <style>
+    :root {
+      --primary: #3B82F6;
+      --secondary: #111827;
+      --accent: #22C55E;
+      --background: #FFFFFF;
+      --text: #0F172A;
+      --muted: #64748B;
+      --border-radius: 20px;
+      --shadow: 0 20px 45px rgba(15, 23, 42, 0.14);
+      --glass: rgba(255, 255, 255, 0.78);
+      --gradient-a: linear-gradient(145deg, #e7f0ff 0%, #f8fbff 55%, #eafaf1 100%);
+      --gradient-b: linear-gradient(135deg, rgba(59,130,246,.15), rgba(34,197,94,.15));
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+      background: var(--background);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      isolation: isolate;
+      background: var(--gradient-a);
+    }
+
+    .ambient,
+    .ambient::before,
+    .ambient::after {
+      position: absolute;
+      content: "";
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: .55;
+      z-index: 0;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .ambient {
+      width: 480px;
+      height: 480px;
+      left: -130px;
+      top: -140px;
+      background: rgba(59,130,246,.26);
+    }
+
+    .ambient::before {
+      width: 340px;
+      height: 340px;
+      left: 56vw;
+      top: 58vh;
+      background: rgba(34,197,94,.22);
+      animation-delay: -2.5s;
+    }
+
+    .ambient::after {
+      width: 280px;
+      height: 280px;
+      left: 72vw;
+      top: 10vh;
+      background: rgba(14,165,233,.18);
+      animation-delay: -4.5s;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      padding: 5.2vh 5.8vw 9.2vh;
+      display: grid;
+      align-content: center;
+      opacity: 0;
+      transform: translateY(18px) scale(.98);
+      transition: opacity .65s cubic-bezier(.2,.65,.2,1), transform .65s cubic-bezier(.2,.65,.2,1);
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--primary);
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .84rem;
+    }
+
+    .title {
+      margin: .6rem 0 1rem;
+      font-size: clamp(2.3rem, 5.7vw, 5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--secondary);
+      max-width: 14ch;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: clamp(1rem, 2.2vw, 1.55rem);
+      color: var(--muted);
+      max-width: 45ch;
+      line-height: 1.45;
+    }
+
+    .hero-badges {
+      margin-top: 1.3rem;
+      display: flex;
+      gap: .7rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: .46rem .95rem;
+      border-radius: 999px;
+      background: rgba(59,130,246,.12);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: .92rem;
+      border: 1px solid rgba(59,130,246,.16);
+    }
+
+    .big-card {
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(148,163,184,.2);
+      border-radius: calc(var(--border-radius) + 6px);
+      box-shadow: var(--shadow);
+      padding: 1.1rem 1.2rem;
+    }
+
+    .agenda-grid {
+      margin-top: 1.1rem;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: .8rem;
+    }
+
+    .agenda-item {
+      min-height: 128px;
+      display: grid;
+      align-content: space-between;
+      padding: .95rem;
+      border-radius: 16px;
+      background: linear-gradient(160deg, rgba(255,255,255,.95), rgba(248,250,252,.95));
+      border: 1px solid rgba(148,163,184,.2);
+    }
+
+    .agenda-item .num {
+      width: 2rem;
+      height: 2rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(59,130,246,.14);
+      font-size: .86rem;
+    }
+
+    .agenda-item span:last-child {
+      font-size: clamp(.95rem, 1.5vw, 1.18rem);
+      font-weight: 650;
+      line-height: 1.3;
+    }
+
+    .section-slide {
+      text-align: center;
+      justify-items: center;
+      background: radial-gradient(circle at 50% 50%, rgba(59,130,246,.1), transparent 58%);
+    }
+
+    .section-slide .title { max-width: none; }
+
+    .section-stat {
+      margin-top: 1.3rem;
+      padding: .95rem 1.2rem;
+      border-radius: 14px;
+      color: #0b4aa2;
+      background: rgba(59,130,246,.1);
+      font-weight: 600;
+    }
+
+    .split-grid {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: 1.2fr .95fr;
+      gap: 1rem;
+    }
+
+    .bullets { margin: .4rem 0 0; padding-left: 1rem; }
+    .bullets li {
+      margin: .72rem 0;
+      font-size: clamp(1rem, 2.1vw, 1.44rem);
+      line-height: 1.34;
+      font-weight: 540;
+    }
+
+    .metric-grid {
+      display: grid;
+      gap: .8rem;
+    }
+
+    .metric {
+      border-radius: 16px;
+      background: linear-gradient(145deg, #fff, #f8fafc);
+      border: 1px solid rgba(148,163,184,.2);
+      padding: .8rem 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric::after {
+      content: "";
+      position: absolute;
+      inset: auto -15% -72% -15%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(239,68,68,.17), transparent 70%);
+    }
+
+    .metric-label {
+      font-size: .85rem;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .metric-value {
+      font-size: clamp(2rem, 4.5vw, 3.1rem);
+      font-weight: 800;
+      color: #dc2626;
+      line-height: 1;
+      margin-top: .4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .chart-card {
+      margin-top: .95rem;
+      height: min(64vh, 530px);
+      border-radius: calc(var(--border-radius) + 6px);
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(248,250,252,.88));
+      border: 1px solid rgba(148,163,184,.2);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+    }
+
+    #chart { width: 100%; height: 100%; }
+
+    .roadmap {
+      margin-top: .95rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .8rem;
+      position: relative;
+    }
+
+    .roadmap::before {
+      content: "";
+      position: absolute;
+      left: 12%; right: 12%; top: 22px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(59,130,246,.45), rgba(34,197,94,.45));
+      z-index: 0;
+    }
+
+    .phase {
+      position: relative;
+      z-index: 1;
+      min-height: 205px;
+      padding: 1.5rem 1rem 1rem;
+      text-align: center;
+      border-radius: 18px;
+      background: linear-gradient(165deg, rgba(255,255,255,.94), rgba(241,245,249,.94));
+      border: 1px solid rgba(148,163,184,.22);
+      box-shadow: var(--shadow);
+    }
+
+    .phase .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin: 0 auto .7rem;
+      background: var(--primary);
+      box-shadow: 0 0 0 10px rgba(59,130,246,.16);
+    }
+
+    .phase h3 {
+      margin: .2rem 0 .6rem;
+      font-size: 1.3rem;
+      color: var(--secondary);
+    }
+
+    .phase p {
+      margin: 0;
+      font-size: 1.08rem;
+      color: var(--muted);
+    }
+
+    .final {
+      text-align: center;
+      justify-items: center;
+      background: var(--gradient-b);
+    }
+
+    .final .title { max-width: none; }
+
+    .qa-tag {
+      margin-top: 1.2rem;
+      padding: .65rem 1.1rem;
+      border-radius: 12px;
+      border: 1px dashed rgba(15,23,42,.25);
+      font-weight: 600;
+      background: rgba(255,255,255,.7);
+    }
+
+    .topbar {
+      position: absolute;
+      top: 1rem;
+      right: 1.4rem;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+    }
+
+    .btn {
+      border: 0;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 999px;
+      cursor: pointer;
+      color: var(--secondary);
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 6px 18px rgba(15,23,42,.11);
+      transition: transform .2s ease, background .2s ease;
+      font-size: 1rem;
+    }
+
+    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.95); }
+
+    .progress {
+      width: 160px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,.1);
+      overflow: hidden;
+    }
+
+    .progress > span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width .45s ease;
+    }
+
+    .footer {
+      position: absolute;
+      left: 1.8rem;
+      right: 1.8rem;
+      bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: .86rem;
+      color: #475569;
+      z-index: 3;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.04); }
+    }
+
+    @media (max-width: 1100px) {
+      .agenda-grid { grid-template-columns: repeat(3, 1fr); }
+      .split-grid { grid-template-columns: 1fr; }
+      .roadmap { grid-template-columns: 1fr; }
+      .roadmap::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <div class="ambient"></div>
+
+    <div class="topbar">
+      <button class="btn" id="prev" aria-label="上一页">←</button>
+      <div class="progress"><span id="progress-bar"></span></div>
+      <button class="btn" id="next" aria-label="下一页">→</button>
+    </div>
+
+    <section class="slide active" data-title="封面">
+      <p class="eyebrow">2026 Strategic Planning</p>
+      <h1 class="title">AI 战略升级方案</h1>
+      <p class="subtitle">以“增长效率 + 组织智能”双轮驱动，构建下一阶段竞争护城河。</p>
+      <div class="hero-badges">
+        <span class="badge">Internal Strategy</span>
+        <span class="badge">Management Briefing</span>
+      </div>
+    </section>
+
+    <section class="slide" data-title="目录">
+      <p class="eyebrow">Agenda</p>
+      <h2 class="title">目录</h2>
+      <div class="big-card">
+        <div class="agenda-grid">
+          <div class="agenda-item"><span class="num">01</span><span>行业背景</span></div>
+          <div class="agenda-item"><span class="num">02</span><span>当前问题</span></div>
+          <div class="agenda-item"><span class="num">03</span><span>解决方案</span></div>
+          <div class="agenda-item"><span class="num">04</span><span>路线图</span></div>
+          <div class="agenda-item"><span class="num">05</span><span>风险控制</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide section-slide" data-title="行业背景">
+      <p class="eyebrow">Section I</p>
+      <h2 class="title">行业背景</h2>
+      <p class="subtitle">行业进入“效率优先”阶段：规模增长趋缓，利润增长依赖智能化重构。</p>
+      <div class="section-stat">关键判断：AI 将从“提效工具”升级为“业务增长引擎”</div>
+    </section>
+
+    <section class="slide" data-title="当前挑战">
+      <p class="eyebrow">Current State</p>
+      <h2 class="title">当前挑战</h2>
+      <div class="split-grid">
+        <div class="big-card">
+          <ul class="bullets">
+            <li>获客成本持续上升，增长投入压力变大</li>
+            <li>转化率增长放缓，漏斗优化接近瓶颈</li>
+            <li>市场竞争加剧，同质化策略回报递减</li>
+          </ul>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><div class="metric-label">CAC</div><div class="metric-value">+18%</div></div>
+          <div class="metric"><div class="metric-label">转化率</div><div class="metric-value">-6%</div></div>
+          <div class="metric"><div class="metric-label">ROI</div><div class="metric-value">-12%</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="核心指标趋势">
+      <p class="eyebrow">Data Insight</p>
+      <h2 class="title">核心指标趋势</h2>
+      <p class="subtitle">Revenue 曲线持续抬升，且与 Cost 的差值逐季扩大，说明 AI 战略具备规模化兑现基础。</p>
+      <div class="chart-card">
+        <svg id="chart" viewBox="0 0 980 540" preserveAspectRatio="none"></svg>
+      </div>
+    </section>
+
+    <section class="slide" data-title="实施路径">
+      <p class="eyebrow">Execution Roadmap</p>
+      <h2 class="title">实施路径</h2>
+      <div class="roadmap">
+        <article class="phase">
+          <div class="dot"></div>
+          <h3>Phase 1</h3>
+          <p>数据整合</p>
+        </article>
+        <article class="phase">
+          <div class="dot"></div>
+          <h3>Phase 2</h3>
+          <p>模型升级</p>
+        </article>
+        <article class="phase">
+          <div class="dot"></div>
+          <h3>Phase 3</h3>
+          <p>商业化放大</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide final" data-title="结束页">
+      <p class="eyebrow">Thanks</p>
+      <h2 class="title">Thank You</h2>
+      <p class="subtitle">Q&amp;A</p>
+      <div class="qa-tag">欢迎讨论：优先级、资源配置、里程碑指标</div>
+    </section>
+
+    <footer class="footer">
+      <span>Confidential</span>
+      <span id="page">1 / 7</span>
+    </footer>
+  </main>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const pageEl = document.getElementById('page');
+    const progressBar = document.getElementById('progress-bar');
+    let current = 0;
+
+    function renderSlide() {
+      slides.forEach((slide, index) => slide.classList.toggle('active', index === current));
+      pageEl.textContent = `${current + 1} / ${slides.length}`;
+      progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
+    }
+
+    function nextSlide() {
+      current = (current + 1) % slides.length;
+      renderSlide();
+    }
+
+    function prevSlide() {
+      current = (current - 1 + slides.length) % slides.length;
+      renderSlide();
+    }
+
+    document.getElementById('next').addEventListener('click', nextSlide);
+    document.getElementById('prev').addEventListener('click', prevSlide);
+
+    document.addEventListener('keydown', (event) => {
+      if (['ArrowRight', 'PageDown', ' '].includes(event.key)) nextSlide();
+      if (['ArrowLeft', 'PageUp'].includes(event.key)) prevSlide();
+    });
+
+    function drawChart() {
+      const svg = document.getElementById('chart');
+      const width = 980;
+      const height = 540;
+      const margin = { top: 45, right: 80, bottom: 80, left: 80 };
+
+      const xLabels = ['Q1', 'Q2', 'Q3', 'Q4'];
+      const series = [
+        { name: 'Revenue', color: '#3B82F6', data: [10, 12, 18, 25] },
+        { name: 'Cost', color: '#22C55E', data: [8, 9, 11, 13] }
+      ];
+
+      const maxY = 26;
+      const plotWidth = width - margin.left - margin.right;
+      const plotHeight = height - margin.top - margin.bottom;
+      const xStep = plotWidth / (xLabels.length - 1);
+
+      const x = (i) => margin.left + i * xStep;
+      const y = (v) => height - margin.bottom - (v / maxY) * plotHeight;
+
+      const NS = 'http://www.w3.org/2000/svg';
+      const append = (el) => svg.appendChild(el);
+
+      function line(x1, y1, x2, y2, color, width = 1, opacity = .14, dash = '') {
+        const el = document.createElementNS(NS, 'line');
+        el.setAttribute('x1', x1);
+        el.setAttribute('y1', y1);
+        el.setAttribute('x2', x2);
+        el.setAttribute('y2', y2);
+        el.setAttribute('stroke', color);
+        el.setAttribute('stroke-width', width);
+        el.setAttribute('opacity', opacity);
+        if (dash) el.setAttribute('stroke-dasharray', dash);
+        append(el);
+      }
+
+      function text(xPos, yPos, textVal, color = '#64748B', size = 15, anchor = 'middle', weight = '500') {
+        const el = document.createElementNS(NS, 'text');
+        el.setAttribute('x', xPos);
+        el.setAttribute('y', yPos);
+        el.setAttribute('fill', color);
+        el.setAttribute('font-size', size);
+        el.setAttribute('font-weight', weight);
+        el.setAttribute('text-anchor', anchor);
+        el.textContent = textVal;
+        append(el);
+      }
+
+      [0, 5, 10, 15, 20, 25].forEach((tick) => {
+        line(margin.left, y(tick), width - margin.right, y(tick), '#0f172a', 1, .1, '3 5');
+        text(margin.left - 14, y(tick) + 5, tick, '#94A3B8', 13, 'end', '400');
+      });
+
+      xLabels.forEach((label, i) => {
+        text(x(i), height - margin.bottom + 35, label, '#475569', 15, 'middle', '600');
+      });
+
+      series.forEach((item) => {
+        const area = document.createElementNS(NS, 'path');
+        const pathTop = item.data.map((v, i) => `${i === 0 ? 'M' : 'L'} ${x(i)} ${y(v)}`).join(' ');
+        const pathArea = `${pathTop} L ${x(item.data.length - 1)} ${height - margin.bottom} L ${x(0)} ${height - margin.bottom} Z`;
+        area.setAttribute('d', pathArea);
+        area.setAttribute('fill', item.color);
+        area.setAttribute('opacity', '.08');
+        append(area);
+
+        const path = document.createElementNS(NS, 'path');
+        path.setAttribute('d', pathTop);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', item.color);
+        path.setAttribute('stroke-width', '4');
+        path.setAttribute('stroke-linecap', 'round');
+        path.setAttribute('stroke-linejoin', 'round');
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = length;
+        path.style.strokeDashoffset = length;
+        path.style.animation = 'dash 1.6s ease forwards';
+        append(path);
+
+        item.data.forEach((value, i) => {
+          const circle = document.createElementNS(NS, 'circle');
+          circle.setAttribute('cx', x(i));
+          circle.setAttribute('cy', y(value));
+          circle.setAttribute('r', '5.5');
+          circle.setAttribute('fill', item.color);
+          circle.setAttribute('stroke', '#ffffff');
+          circle.setAttribute('stroke-width', '2');
+          append(circle);
+
+          text(x(i), y(value) - 12, value, item.color, 13, 'middle', '700');
+        });
+      });
+
+      series.forEach((item, i) => {
+        line(width - 225, margin.top + i * 32, width - 195, margin.top + i * 32, item.color, 4, 1);
+        text(width - 184, margin.top + 6 + i * 32, item.name, '#334155', 15, 'start', '600');
+      });
+    }
+
+    const style = document.createElement('style');
+    style.innerHTML = '@keyframes dash { to { stroke-dashoffset: 0; } }';
+    document.head.appendChild(style);
+
+    drawChart();
+    renderSlide();
+  </script>
+</body>
+</html>
