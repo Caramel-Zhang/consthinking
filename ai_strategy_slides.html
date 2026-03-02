@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 战略升级方案 - 2026 战略规划汇报</title>
+  <style>
+    :root {
+      --primary: #3B82F6;
+      --secondary: #111827;
+      --accent: #22C55E;
+      --bg: #FFFFFF;
+      --text: #0F172A;
+      --radius: 20px;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.10);
+      --muted: #64748B;
+      --card: #F8FAFC;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Roboto, "PingFang SC", "Noto Sans CJK SC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 5vh 6vw 8vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateX(60px) scale(0.98);
+      pointer-events: none;
+      transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .title {
+      font-size: clamp(2rem, 4.6vw, 4rem);
+      margin: 0 0 1rem;
+      color: var(--secondary);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.1vw, 1.6rem);
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .tagline {
+      margin-top: 1.2rem;
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      background: rgba(59,130,246,.12);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .cards {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .agenda-list {
+      margin-top: 1.4rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem 1.2rem;
+      border: 1px solid rgba(148,163,184,.15);
+    }
+
+    .agenda-item {
+      font-size: clamp(1rem, 1.9vw, 1.4rem);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+    }
+
+    .agenda-item .num {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: rgba(59,130,246,.15);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-size: 0.95rem;
+    }
+
+    .section-slide {
+      text-align: center;
+      background: radial-gradient(circle at top right, rgba(59,130,246,.08), transparent 45%);
+    }
+
+    .section-slide .title {
+      font-size: clamp(2.3rem, 6vw, 5rem);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.2rem;
+      margin-top: 1.3rem;
+    }
+
+    .bullet-list { margin: 0; padding-left: 1.2rem; }
+    .bullet-list li {
+      margin: .9rem 0;
+      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+      line-height: 1.35;
+      max-width: 28ch;
+    }
+
+    .metrics {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 600;
+    }
+    .metric .value {
+      font-size: clamp(2rem, 4.6vw, 3.2rem);
+      font-weight: 800;
+      margin-top: .25rem;
+      color: #DC2626;
+    }
+
+    .chart-wrap {
+      margin-top: 1.4rem;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      height: min(62vh, 520px);
+      border: 1px solid rgba(148,163,184,.15);
+    }
+
+    .roadmap {
+      margin-top: 1.4rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 1rem;
+    }
+
+    .phase {
+      position: relative;
+      padding-top: 2.2rem;
+      min-height: 180px;
+    }
+    .phase::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: .7rem;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 8px rgba(59,130,246,.15);
+    }
+    .phase h3 {
+      margin: .5rem 0;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+    .phase p {
+      margin: 0;
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    .final {
+      text-align: center;
+      background: linear-gradient(140deg, rgba(59,130,246,.08), rgba(34,197,94,.08));
+    }
+
+    .footer {
+      position: absolute;
+      left: 2rem;
+      right: 2rem;
+      bottom: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #475569;
+      font-size: 0.85rem;
+      z-index: 2;
+    }
+
+    .controls {
+      position: absolute;
+      right: 2rem;
+      top: 1.2rem;
+      display: flex;
+      gap: .5rem;
+      z-index: 3;
+    }
+    .btn {
+      border: none;
+      border-radius: 999px;
+      background: rgba(15,23,42,.08);
+      color: #0f172a;
+      width: 2.2rem;
+      height: 2.2rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all .2s ease;
+    }
+    .btn:hover { background: rgba(59,130,246,.2); }
+  </style>
+</head>
+<body>
+  <main class="deck" id="deck">
+    <div class="controls">
+      <button class="btn" id="prev" aria-label="上一页">←</button>
+      <button class="btn" id="next" aria-label="下一页">→</button>
+    </div>
+
+    <section class="slide active" data-title="封面">
+      <h1 class="title">AI 战略升级方案</h1>
+      <p class="subtitle">2026 战略规划汇报</p>
+      <span class="tagline">Internal Strategy</span>
+    </section>
+
+    <section class="slide" data-title="目录">
+      <h2 class="title">目录</h2>
+      <div class="cards agenda-list">
+        <div class="card agenda-item"><span class="num">01</span>行业背景</div>
+        <div class="card agenda-item"><span class="num">02</span>当前问题</div>
+        <div class="card agenda-item"><span class="num">03</span>解决方案</div>
+        <div class="card agenda-item"><span class="num">04</span>路线图</div>
+        <div class="card agenda-item"><span class="num">05</span>风险控制</div>
+      </div>
+    </section>
+
+    <section class="slide section-slide" data-title="行业背景">
+      <h2 class="title">行业背景</h2>
+      <p class="subtitle">增长放缓与效率竞争并存，AI 成为重构利润曲线的关键变量。</p>
+    </section>
+
+    <section class="slide" data-title="当前挑战">
+      <h2 class="title">当前挑战</h2>
+      <div class="split">
+        <div class="card">
+          <ul class="bullet-list">
+            <li>获客成本持续上升</li>
+            <li>转化率增长放缓</li>
+            <li>市场竞争加剧</li>
+          </ul>
+        </div>
+        <div class="metrics">
+          <div class="card metric"><div class="label">CAC</div><div class="value">+18%</div></div>
+          <div class="card metric"><div class="label">转化率</div><div class="value">-6%</div></div>
+          <div class="card metric"><div class="label">ROI</div><div class="value">-12%</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="核心指标趋势">
+      <h2 class="title">核心指标趋势</h2>
+      <p class="subtitle">收入增速快于成本增速，规模化窗口正在形成。</p>
+      <div class="chart-wrap">
+        <svg id="chart" width="100%" height="100%" viewBox="0 0 960 520" preserveAspectRatio="none"></svg>
+      </div>
+    </section>
+
+    <section class="slide" data-title="实施路径">
+      <h2 class="title">实施路径</h2>
+      <div class="roadmap">
+        <div class="card phase">
+          <h3>Phase 1</h3>
+          <p>数据整合</p>
+        </div>
+        <div class="card phase">
+          <h3>Phase 2</h3>
+          <p>模型升级</p>
+        </div>
+        <div class="card phase">
+          <h3>Phase 3</h3>
+          <p>商业化放大</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide final" data-title="结束页">
+      <h2 class="title">Thank You</h2>
+      <p class="subtitle">Q&amp;A</p>
+    </section>
+
+    <footer class="footer">
+      <span>Confidential</span>
+      <span id="page"></span>
+    </footer>
+  </main>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const page = document.getElementById('page');
+    let idx = 0;
+
+    function render() {
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      page.textContent = `${idx + 1} / ${slides.length}`;
+    }
+
+    function next() { idx = (idx + 1) % slides.length; render(); }
+    function prev() { idx = (idx - 1 + slides.length) % slides.length; render(); }
+
+    document.getElementById('next').addEventListener('click', next);
+    document.getElementById('prev').addEventListener('click', prev);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') next();
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') prev();
+    });
+
+    function drawChart() {
+      const svg = document.getElementById('chart');
+      const W = 960, H = 520;
+      const margin = { t: 40, r: 60, b: 70, l: 80 };
+      const xLabels = ['Q1', 'Q2', 'Q3', 'Q4'];
+      const series = [
+        { name: 'Revenue', data: [10, 12, 18, 25], color: '#3B82F6' },
+        { name: 'Cost', data: [8, 9, 11, 13], color: '#22C55E' }
+      ];
+
+      const xStep = (W - margin.l - margin.r) / (xLabels.length - 1);
+      const maxY = 26;
+      const y = v => H - margin.b - (v / maxY) * (H - margin.t - margin.b);
+      const x = i => margin.l + i * xStep;
+
+      const ns = 'http://www.w3.org/2000/svg';
+      const add = (el) => svg.appendChild(el);
+      const line = (x1,y1,x2,y2,c,w=1,op=.14) => {
+        const l = document.createElementNS(ns, 'line');
+        l.setAttribute('x1',x1); l.setAttribute('y1',y1);
+        l.setAttribute('x2',x2); l.setAttribute('y2',y2);
+        l.setAttribute('stroke',c); l.setAttribute('stroke-width',w); l.setAttribute('opacity',op);
+        add(l);
+      };
+      const text = (tx,ty,t,fill='#64748B',size=16,anchor='middle',weight='500') => {
+        const te = document.createElementNS(ns, 'text');
+        te.setAttribute('x',tx); te.setAttribute('y',ty); te.setAttribute('fill',fill);
+        te.setAttribute('font-size',size); te.setAttribute('font-weight',weight);
+        te.setAttribute('text-anchor',anchor); te.textContent = t; add(te);
+      };
+
+      // grid + y labels
+      [0,5,10,15,20,25].forEach(v => {
+        line(margin.l, y(v), W-margin.r, y(v), '#0f172a', 1, .12);
+        text(margin.l-15, y(v)+5, String(v), '#94A3B8', 14, 'end', '400');
+      });
+
+      // x labels
+      xLabels.forEach((lb, i) => text(x(i), H - margin.b + 30, lb, '#475569', 15));
+
+      series.forEach(s => {
+        const path = document.createElementNS(ns, 'path');
+        const d = s.data.map((v,i) => `${i === 0 ? 'M' : 'L'} ${x(i)} ${y(v)}`).join(' ');
+        path.setAttribute('d', d);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', s.color);
+        path.setAttribute('stroke-width', '4');
+        path.setAttribute('stroke-linecap', 'round');
+        path.setAttribute('stroke-linejoin', 'round');
+        add(path);
+
+        s.data.forEach((v,i) => {
+          const c = document.createElementNS(ns, 'circle');
+          c.setAttribute('cx', x(i)); c.setAttribute('cy', y(v)); c.setAttribute('r', 5.5);
+          c.setAttribute('fill', s.color);
+          c.setAttribute('stroke', '#fff'); c.setAttribute('stroke-width', 2);
+          add(c);
+        });
+      });
+
+      // legend
+      series.forEach((s, i) => {
+        line(W - 220, margin.t + i*28, W - 190, margin.t + i*28, s.color, 4, 1);
+        text(W - 180, margin.t + 6 + i*28, s.name, '#334155', 15, 'start', '600');
+      });
+    }
+
+    drawChart();
+    render();
+  </script>
+</body>
+</html>
